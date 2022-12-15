@@ -1,12 +1,19 @@
+import {useContext} from "react";
+import {GlobalContext} from "../context/GlobalState";
+import TransactionItem from "./TransactionItem";
 const TransactionList = () => {
+  const data = useContext(GlobalContext);
   return (
     <div className="mb-4">
       <h5>History</h5>
       <ul className="trans-list">
-        <li className="p-2">
-          Cash <span>-$400</span>
-          <button className="btn btn-danger btn-sm float-right">x</button>
-        </li>
+        {data.transactions.length == 0 && (
+          <span className="text-danger">No transactions found</span>
+        )}
+        {data &&
+          data.transactions.map((trans) => (
+            <TransactionItem key={trans.id} item={trans} />
+          ))}
       </ul>
     </div>
   );
